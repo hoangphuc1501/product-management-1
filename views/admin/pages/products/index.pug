@@ -7,24 +7,9 @@ block main
     .card-body
         .row
             .col-4
-                select(box-filter class="form-control")
-                    option(value="") Tất cả
-                    option(value="active") Hoạt động
-                    option(value="inactive") Dừng hoạt động
+                include ../../partials/box-filter.pug
             .col-8
-                form(form-search action="")
-                    .input-group
-                        input(
-                            type="text"
-                            placeholder="Nhập từ khóa"
-                            name="keyword"
-                            class="form-control"
-                        )
-                        .input-group-append
-                            button(
-                                class="btn btn-success"
-                                type="submit"
-                            ) Tìm
+                include ../../partials/form-search.pug
 
     .card
         .card-header Danh sách

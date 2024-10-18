@@ -20,7 +20,7 @@ module.exports.index = async (req, res) => {
     const products = await Product.find(find)
 
     res.render("admin/pages/products/index", {
-        pageTitle: "Trang tổng danh sách sản phẩm",
+        pageTitle: "Trang danh sách sản phẩm",
         products: products
     });
 }
