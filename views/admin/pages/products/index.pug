@@ -1,4 +1,5 @@
 extends ../../layouts/default.pug
+include ../../mixins/box-filter.pug
 block main
     h1 Danh sách sản phẩm
 
@@ -7,7 +8,21 @@ block main
     .card-body
         .row
             .col-4
-                include ../../partials/box-filter.pug
+                +box-filter([
+                    {
+                        label: "Tất cả",
+                        value: ""
+                    },
+                    {
+                        label: "Hoạt động",
+                        value: "active"
+                    },
+                    {
+                        label: "Dừng hoạt động",
+                        value: "inactive"
+                    }
+                ])
+
             .col-8
                 include ../../partials/form-search.pug
 
