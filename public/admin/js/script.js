@@ -49,3 +49,30 @@ if(boxFilter){
         
     }
 // hết tìm kiếm
+
+// phân trang
+    const listButtonPanigation = document.querySelectorAll("[button-pagination]");
+    if(listButtonPanigation.length > 0) {
+        let url = new URL(location.href);
+
+        listButtonPanigation.forEach(button =>{
+            button.addEventListener("click", () => {
+                const page = button.getAttribute("button-pagination");
+                
+                if(page){
+                    url.searchParams.set("page", page);
+                }else{
+                    url.searchParams.delete("page");
+                }
+
+                location.href = url.href
+            })
+        })
+        // hiển thị trang mặc định
+        const pageCurrent = url.searchParams.get("page") || 1;
+        const buttonCurrent = document.querySelector(`[button-pagination="${pageCurrent}"]`);
+        if(buttonCurrent){
+            buttonCurrent.parentNode.classList.add("active");
+        }
+    }
+// hết phần trang
