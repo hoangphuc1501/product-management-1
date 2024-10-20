@@ -70,10 +70,26 @@ module.exports.changeMulti = async (req, res) => {
     })
 }
 
+// Xóa sản phẩm vĩnh viễn
+// module.exports.delete = async (req, res) => {
+    
+//     await Product.deleteOne({
+//         _id: req.body.id
+//     })
+
+//     res.json({
+//         code: "success",
+//         message: "Xóa thành công"
+//     })
+// }
+
+// Xóa mềm
 module.exports.delete = async (req, res) => {
     
-    await Product.deleteOne({
+    await Product.updateOne({
         _id: req.body.id
+    },{
+        deleted: true
     })
 
     res.json({
