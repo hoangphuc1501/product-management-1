@@ -1,4 +1,4 @@
 mixin box-filter(options)
-    select(box-filter class="form-control")
+    select(box-filter class="form-control" name="status")
         each item in options
             option(value=item.value) #{item.label} 

@@ -30,9 +30,32 @@ block main
     .card
         .card-header Danh sách
         .card-body
+            .row.mb-3
+                .col-4
+                    form(
+                        form-change-multi
+                        data-path=`/${prefixAdmin}/products/change-multi`
+                    )
+                        .input-group
+                            +box-filter([
+                                {
+                                    label: "Hoạt động",
+                                    value: "active"
+                                },
+                                {
+                                    label: "Dừng hoạt động",
+                                    value: "inactive"
+                                }
+                            ])
+                            .input-group-append
+                                button(
+                                class="btn btn-success"
+                                type="submit"
+                                ) Áp dụng
             table.table.table-hover.table-sm
                 thead
                     tr
+                        th 
                         th STT
                         th Hình ảnh
                         th Tiêu đề
@@ -41,7 +64,9 @@ block main
                         th Hành động
                 tbody
                     each item, index in products
-                        tr 
+                        tr
+                            td 
+                                input(type="checkbox" input-change=item.id )
                             td #{index+1}
                             td
                                 img(
@@ -82,6 +107,6 @@ block main
             if(currentPage < totalPage)
                 li(class="page-item")
                     button(class="page-link" button-pagination=currentPage+1) Kế tiếp
-    
+
 
 
