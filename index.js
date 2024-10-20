@@ -1,5 +1,6 @@
 const express = require("express");
 require('dotenv').config(); 
+var bodyParser = require('body-parser')
 const systemConfig = require("./config/system");
 const app = express();
 const port = process.env.PORT;
@@ -16,6 +17,10 @@ app.use(express.static('public'))// thiết lập thư mục chứa file tĩnh
 // khai báo biến toàn cục cho file pug
 app.locals.prefixAdmin = systemConfig.prefixAdmin
 // routeClient(app) // khi ko có đặt tên hàm thì biến routeClinet chính là tên hàm
+
+// parse application/json
+app.use(bodyParser.json())
+
 
 // khai báo đường dẫn
 routeAdmin(app) ;
