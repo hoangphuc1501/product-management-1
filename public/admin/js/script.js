@@ -148,3 +148,35 @@ if(formChangeMulti){
     })
 }
 // hết đổi trạng thái nhiều bản ghi
+
+// Xóa bản ghi
+const listButtonDelete = document.querySelectorAll("[button-delete]");
+if(listButtonDelete.length > 0){
+    listButtonDelete.forEach((button) => {
+        button.addEventListener("click", () =>{
+            const isComfirm = confirm("Bạn có chắc xóa bản ghi này");
+
+            if(isComfirm){
+                const path = button.getAttribute("data-path")
+            const id = button.getAttribute("item-id");
+            
+            fetch(path,{
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                method: "DELETE",
+                body: JSON.stringify({
+                    id: id
+                })
+            })
+            .then(res => res.json())
+            .then(id => {
+                if(id.code == "success"){
+                    location.reload();
+                }
+            })
+            }
+        })
+    })
+}
+// Hết xóa bản ghi
