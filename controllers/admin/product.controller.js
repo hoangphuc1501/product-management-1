@@ -32,7 +32,13 @@ module.exports.index = async (req, res) => {
 
     // hết phần trang
 
-    const products = await Product.find(find).limit(limitItem).skip(skip);
+    const products = await Product
+        .find(find)
+        .limit(limitItem)
+        .skip(skip)
+        .sort({
+            position: "desc"
+        });
 
     res.render("admin/pages/products/index", {
         pageTitle: "Trang danh sách sản phẩm",
@@ -117,3 +123,18 @@ module.exports.delete = async (req, res) => {
     })
 }
 // hết xóa mềm
+
+// đổi vị trí
+module.exports.changePosition = async (req, res) => {
+    await Product.updateOne({
+        _id: req.body.id
+    }, {
+        position: req.body.position
+    });
+
+    res.json({
+        code: "success",
+        message: "Đổi vị trí thành công!"
+    })
+}
+// hết đổi vị trí
