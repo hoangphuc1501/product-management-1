@@ -77,7 +77,6 @@ if (listButtonPanigation.length > 0) {
 }
 // hết phần trang
 
-
 // Đổi trạng thái
 const listButtonChangeStatus = document.querySelectorAll("[button-change-status]");
 if (listButtonChangeStatus.length > 0) {
@@ -90,7 +89,6 @@ if (listButtonChangeStatus.length > 0) {
                 id: itemId,
                 status: statusChange
             }
-
             fetch(path, {
                 headers: {
                     "Content-Type": "application/json",
@@ -99,13 +97,11 @@ if (listButtonChangeStatus.length > 0) {
                 body: JSON.stringify(data)
             })
                 .then(res => res.json())
-
                 .then(data => {
                 if(data.code == "success"){
                     location.reload();
                 }
             })
-
         })
     })
 }
@@ -118,8 +114,15 @@ if(formChangeMulti){
         event.preventDefault();
         const path = formChangeMulti.getAttribute("data-path")
         const status = formChangeMulti.status.value;
-        ids = [];
 
+        if(status == "delete"){
+            const isComfirm = confirm("Bạn có chắc chắn muốn xóa không");
+            if(!isComfirm){
+                return;
+            }
+        }
+
+        ids = [];
         const listInputChangeChecked = document.querySelectorAll("[input-change]:checked")
         listInputChangeChecked.forEach((input) => {
             const id = input.getAttribute("input-change");
@@ -141,10 +144,7 @@ if(formChangeMulti){
                         location.reload();
                     }
                 })
-
-            console.log(data) 
         });
-
     })
 }
 // hết đổi trạng thái nhiều bản ghi
@@ -155,7 +155,6 @@ if(listButtonDelete.length > 0){
     listButtonDelete.forEach((button) => {
         button.addEventListener("click", () =>{
             const isComfirm = confirm("Bạn có chắc xóa bản ghi này");
-
             if(isComfirm){
                 const path = button.getAttribute("data-path")
             const id = button.getAttribute("item-id");

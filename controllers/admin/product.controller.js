@@ -5,13 +5,13 @@ module.exports.index = async (req, res) => {
         deleted: false
     }
     // lọc theo trạng thái
-    if(req.query.status) {
+    if (req.query.status) {
         find.status = req.query.status;
     }
     // hết lọc theo trạng thái
-    
+
     // Tìm kiếm
-    if(req.query.keyword){
+    if (req.query.keyword) {
         const regex = new RegExp(req.query.keyword, "i")
         find.title = regex;
     }
@@ -20,16 +20,16 @@ module.exports.index = async (req, res) => {
     // phân trang
     let limitItem = 4;
     let page = 1;
-    if(req.query.page){
+    if (req.query.page) {
         page = parseInt(req.query.page);
     }
-    if(req.query.limit){
+    if (req.query.limit) {
         limitItem = parseInt(req.query.limit);
     }
     const skip = (page - 1) * limitItem;
     const totalProduct = await Product.countDocuments(find);
-    const totalPage = Math.ceil(totalProduct/limitItem);
-    
+    const totalPage = Math.ceil(totalProduct / limitItem);
+
     // hết phần trang
 
     const products = await Product.find(find).limit(limitItem).skip(skip);
@@ -44,10 +44,10 @@ module.exports.index = async (req, res) => {
 
 module.exports.changeStatus = async (req, res) => {
     await Product.updateOne({
-            _id: req.body.id
-        },{
-            status:req.body.status
-        });
+        _id: req.body.id
+    }, {
+        status: req.body.status
+    });
 
     res.json({
         code: "success",
@@ -56,23 +56,42 @@ module.exports.changeStatus = async (req, res) => {
 }
 
 module.exports.changeMulti = async (req, res) => {
-    console.log(req.body)
-
-    await Product.updateMany({
-        _id: req.body.ids
-    },{
-        status:req.body.status
-    })
-
-    res.json({
-        code: "success",
-        message: "Đổi trạng thái thành công!"
-    })
+    switch (req.body.status) {
+        case "active":
+        case "inactive":
+            await Product.updateMany({
+                _id: req.body.ids
+            }, {
+                status: req.body.status
+            })
+            res.json({
+                code: "success",
+                message: "Đổi trạng thái thành công!"
+            })
+            break;
+        case "delete":
+            await Product.updateMany({
+                _id: req.body.ids
+            }, {
+                deleted: true
+            })
+            res.json({
+                code: "success",
+                message: "Xóa thành công!"
+            })
+            break;
+        default:
+            res.json({
+                code: "error",
+                message: "Trạng thái không hợp lệ"
+            })
+            break;
+    }
 }
 
 // Xóa sản phẩm vĩnh viễn
 // module.exports.delete = async (req, res) => {
-    
+
 //     await Product.deleteOne({
 //         _id: req.body.id
 //     })
@@ -85,10 +104,10 @@ module.exports.changeMulti = async (req, res) => {
 
 // Xóa mềm
 module.exports.delete = async (req, res) => {
-    
+
     await Product.updateOne({
         _id: req.body.id
-    },{
+    }, {
         deleted: true
     })
 
@@ -97,3 +116,4 @@ module.exports.delete = async (req, res) => {
         message: "Xóa thành công"
     })
 }
+// hết xóa mềm
