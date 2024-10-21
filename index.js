@@ -1,6 +1,9 @@
 const express = require("express");
 require('dotenv').config(); 
-var bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
+const flash = require('express-flash');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
 const systemConfig = require("./config/system");
 const app = express();
 const port = process.env.PORT;
@@ -21,6 +24,10 @@ app.locals.prefixAdmin = systemConfig.prefixAdmin
 // parse application/json
 app.use(bodyParser.json())
 
+// flash
+app.use(cookieParser('keyboard cat'));
+app.use(session({ cookie: { maxAge: 60000 }}));
+app.use(flash());
 
 // khai báo đường dẫn
 routeAdmin(app) ;
