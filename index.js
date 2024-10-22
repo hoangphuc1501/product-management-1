@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const flash = require('express-flash');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const methodOverride = require('method-override');
 const systemConfig = require("./config/system");
 const app = express();
 const port = process.env.PORT;
@@ -21,6 +22,9 @@ app.use(express.static('public'))// thiết lập thư mục chứa file tĩnh
 app.locals.prefixAdmin = systemConfig.prefixAdmin
 // routeClient(app) // khi ko có đặt tên hàm thì biến routeClinet chính là tên hàm
 
+
+// override with POST having ?_method=DELETE
+app.use(methodOverride('_method'))
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json

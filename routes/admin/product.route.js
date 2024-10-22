@@ -23,9 +23,15 @@ route.patch("/change-multi", controller.changeMulti);
 route.patch("/delete", controller.delete);
 route.patch("/change-position", controller.changePosition);
 route.get("/create", controller.create);
-route.post(
-    "/create", 
+
+
+route.get("/edit/:id", controller.edit);
+route.patch(
+    "/edit/:id", 
     upload.single('thumbnail'),
     validate.createPost, 
-    controller.createPost);
+    controller.editPatch);    
+
+
+
 module.exports = route;
