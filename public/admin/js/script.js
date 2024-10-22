@@ -221,3 +221,18 @@ if(listButtonDelete.length > 0){
         }, 3000);
     }
 // hết alert-message
+
+// preview ảnh
+const uploadImage = document.querySelector("[upload-image]");
+if(uploadImage){
+    const uploadImageInput = document.querySelector("[upload-image-input]");
+    const uploadImagePreview = document.querySelector("[upload-image-preview]");
+    uploadImageInput.addEventListener("change", () => {
+        const file = uploadImageInput.files[0];
+        if(file){
+            uploadImagePreview.src = URL.createObjectURL(file);
+        }
+    })
+
+}
+//hết preview ảnh
