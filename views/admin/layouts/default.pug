@@ -13,6 +13,12 @@ html(lang="en")
                 alert-message
                 style="position: fixed; top: 60px; right: 20px; z-index: 9999;"
             ) #{messages.success}
+        - if (messages.error)
+            div(
+                class="alert alert-danger alert-message"
+                alert-message
+                style="position: fixed; top: 60px; right: 20px; z-index: 9999;"
+            ) #{messages.error}
 
         include ../partials/header.pug
         .body
