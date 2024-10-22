@@ -157,10 +157,14 @@ module.exports.createPost = async (req, res) => {
         const countRecord = await Product.countDocuments()
         req.body.position = countRecord + 1;
     }
-    
+
+    if(req.file){
+        req.body.thumbnail = `/uploads/${req.file.filename}`;
+    }
+        console.log(req.file)
+        console.log(req.body)
     const record = new Product(req.body);
     await record.save();
-    console.log(req.body)
     res.redirect(`/${systemComfig.prefixAdmin}/products`);
 }
 // 
