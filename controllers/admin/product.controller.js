@@ -1,5 +1,5 @@
 const Product = require("../../models/product.model");
-
+const systemComfig = require("../../config/system");
 module.exports.index = async (req, res) => {
     const find = {
         deleted: false
@@ -138,3 +138,29 @@ module.exports.changePosition = async (req, res) => {
     })
 }
 // hết đổi vị trí
+
+// thêm mới sản phẩm
+module.exports.create = async (req, res) => {
+    res.render("admin/pages/products/create", {
+        pageTitle: "Thêm mới sản phẩm",
+        
+    });
+}
+
+module.exports.createPost = async (req, res) => {
+    req.body.price = parseInt(req.body.price);
+    req.body.discountPercentage = parseInt(req.body.discountPercentage);
+    req.body.stock = parseInt(req.body.stock);
+    if(req.body.position){
+        req.body.position = parseInt(req.body.position);
+    }else{
+        const countRecord = await Product.countDocuments()
+        req.body.position = countRecord + 1;
+    }
+    
+    const record = new Product(req.body);
+    await record.save();
+    console.log(req.body)
+    res.redirect(`/${systemComfig.prefixAdmin}/products`);
+}
+// 

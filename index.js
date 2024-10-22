@@ -21,6 +21,8 @@ app.use(express.static('public'))// thiết lập thư mục chứa file tĩnh
 app.locals.prefixAdmin = systemConfig.prefixAdmin
 // routeClient(app) // khi ko có đặt tên hàm thì biến routeClinet chính là tên hàm
 
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 

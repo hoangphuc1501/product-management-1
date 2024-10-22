@@ -3,12 +3,14 @@ const route = express.Router();
 
 const controller = require("../../controllers/admin/product.controller");
 
-route.get("/", controller.index)
+route.get("/", controller.index);
 
-route.patch("/change-status", controller.changeStatus)
+route.patch("/change-status", controller.changeStatus);
 
-route.patch("/change-multi", controller.changeMulti)
+route.patch("/change-multi", controller.changeMulti);
 
-route.patch("/delete", controller.delete)
-route.patch("/change-position", controller.changePosition)
+route.patch("/delete", controller.delete);
+route.patch("/change-position", controller.changePosition);
+route.get("/create", controller.create)
+route.post("/create", controller.createPost)
 module.exports = route;
