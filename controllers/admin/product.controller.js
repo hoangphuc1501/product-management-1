@@ -174,7 +174,6 @@ module.exports.edit = async (req, res) => {
         _id: id,
         deleted: false
     })
-console.log(product);
     res.render("admin/pages/products/edit", {
         pageTitle: "Chỉnh sửa sản phẩm",
         product: product
@@ -203,3 +202,19 @@ module.exports.editPatch = async (req, res) => {
     res.redirect("back");
 }
 // hết edit
+
+// detail
+module.exports.detail = async (req, res) => {
+    const id = req.params.id;
+
+    const product = await Product.findOne({
+        _id: id,
+        deleted: false
+    })
+    res.render("admin/pages/products/detail", {
+        pageTitle: "Chi tiết sản phẩm",
+        product: product
+        
+    });
+}
+// hết detail
