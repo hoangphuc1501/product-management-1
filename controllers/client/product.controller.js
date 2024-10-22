@@ -20,3 +20,22 @@ module.exports.index = async (req, res) => {
         products: products
     });
 }
+
+module.exports.detail = async (req, res) => {
+    const slug = req.params.slug;
+    
+    const products = await Product.findOne({
+        slug: slug,
+        status: "active",
+        deleted: false
+    })
+
+    products.priceNew = products.price*(100-products.discountPercentage)/100;
+    products.priceNew = (products.priceNew).toFixed(0)   
+
+
+    res.render("client/pages/products/detail.pug", {
+        pageTitle: products.title,
+        product: products
+    });
+}
