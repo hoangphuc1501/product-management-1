@@ -30,15 +30,25 @@ module.exports.index = async (req, res) => {
     const totalProduct = await Product.countDocuments(find);
     const totalPage = Math.ceil(totalProduct / limitItem);
 
-    // hết phần trang
+    // hết phânn trang
 
+    // sắp xếp
+    const sort = {}
+    if(req.query.sortKey && req.query.sortValue){
+        const sortKey = req.query.sortKey; 
+        const sortValue = req.query.sortValue;
+
+        sort[sortKey] = sortValue;
+    }else{
+        sort["position"] = "desc"
+    }
+
+    // hết sắp xếp
     const products = await Product
         .find(find)
         .limit(limitItem)
         .skip(skip)
-        .sort({
-            position: "desc"
-        });
+        .sort(sort);
 
     res.render("admin/pages/products/index", {
         pageTitle: "Trang danh sách sản phẩm",
