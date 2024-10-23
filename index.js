@@ -14,9 +14,9 @@ database.connect(); // gọi hàm
 const routeAdmin = require("./routes/admin/index.route"); //nhúng file route
 const routeClient = require("./routes/client/index.route"); //nhúng file route
 
-app.set('views', './views'); //Tìm đến thư mục tên là view
+app.set('views', `${__dirname}/views`); //Tìm đến thư mục tên là view
 app.set('view engine', 'pug')// template engine sử dụng là pug
-app.use(express.static('public'))// thiết lập thư mục chứa file tĩnh
+app.use(express.static(`${__dirname}/public`))// thiết lập thư mục chứa file tĩnh
 
 // khai báo biến toàn cục cho file pug
 app.locals.prefixAdmin = systemConfig.prefixAdmin

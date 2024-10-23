@@ -30,8 +30,8 @@ module.exports.detail = async (req, res) => {
         deleted: false
     })
 
-    products.priceNew = products.price*(100-products.discountPercentage)/100;
-    products.priceNew = (products.priceNew).toFixed(0)   
+    // products.priceNew = products.price*(100-products.discountPercentage)/100;
+    // products.priceNew = (products.priceNew).toFixed(0)   
 
 
     res.render("client/pages/products/detail.pug", {
