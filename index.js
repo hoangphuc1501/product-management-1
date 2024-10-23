@@ -5,6 +5,7 @@ const flash = require('express-flash');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const methodOverride = require('method-override');
+const path = require('path');
 const systemConfig = require("./config/system");
 const app = express();
 const port = process.env.PORT;
@@ -22,7 +23,8 @@ app.use(express.static(`${__dirname}/public`))// thiết lập thư mục chứa
 app.locals.prefixAdmin = systemConfig.prefixAdmin
 // routeClient(app) // khi ko có đặt tên hàm thì biến routeClinet chính là tên hàm
 
-
+/* New Route to the TinyMCE Node module */
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
 // override with POST having ?_method=DELETE
 app.use(methodOverride('_method'))
 // parse application/x-www-form-urlencoded
