@@ -98,10 +98,10 @@ if (listButtonChangeStatus.length > 0) {
             })
                 .then(res => res.json())
                 .then(data => {
-                if(data.code == "success"){
-                    location.reload();
-                }
-            })
+                    if (data.code == "success") {
+                        location.reload();
+                    }
+                })
         })
     })
 }
@@ -109,15 +109,15 @@ if (listButtonChangeStatus.length > 0) {
 
 // Đổi trạng thái nhiều bản ghi
 const formChangeMulti = document.querySelector("[form-change-multi]");
-if(formChangeMulti){
-    formChangeMulti.addEventListener("submit", (event) =>{
+if (formChangeMulti) {
+    formChangeMulti.addEventListener("submit", (event) => {
         event.preventDefault();
         const path = formChangeMulti.getAttribute("data-path")
         const status = formChangeMulti.status.value;
 
-        if(status == "delete"){
+        if (status == "delete") {
             const isComfirm = confirm("Bạn có chắc chắn muốn xóa không");
-            if(!isComfirm){
+            if (!isComfirm) {
                 return;
             }
         }
@@ -140,7 +140,7 @@ if(formChangeMulti){
             })
                 .then(res => res.json())
                 .then(data => {
-                    if(data.code == "success"){
+                    if (data.code == "success") {
                         location.reload();
                     }
                 })
@@ -151,29 +151,29 @@ if(formChangeMulti){
 
 // Xóa bản ghi
 const listButtonDelete = document.querySelectorAll("[button-delete]");
-if(listButtonDelete.length > 0){
+if (listButtonDelete.length > 0) {
     listButtonDelete.forEach((button) => {
-        button.addEventListener("click", () =>{
+        button.addEventListener("click", () => {
             const isComfirm = confirm("Bạn có chắc xóa bản ghi này");
-            if(isComfirm){
+            if (isComfirm) {
                 const path = button.getAttribute("data-path")
-            const id = button.getAttribute("item-id");
-            
-            fetch(path,{
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                method: "PATCH",
-                body: JSON.stringify({
-                    id: id
+                const id = button.getAttribute("item-id");
+
+                fetch(path, {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    method: "PATCH",
+                    body: JSON.stringify({
+                        id: id
+                    })
                 })
-            })
-            .then(res => res.json())
-            .then(id => {
-                if(id.code == "success"){
-                    location.reload();
-                }
-            })
+                    .then(res => res.json())
+                    .then(id => {
+                        if (id.code == "success") {
+                            location.reload();
+                        }
+                    })
             }
         })
     })
@@ -181,55 +181,55 @@ if(listButtonDelete.length > 0){
 // Hết xóa bản ghi
 
 // Đổi vị trí
-    const ListInputPosition = document.querySelectorAll("[input-position]");
-    if(ListInputPosition.length > 0) {
-        ListInputPosition.forEach((input) => {
-            input.addEventListener("change", () => {
-                const path = input.getAttribute("data-path");
-                const position = parseInt(input.value);
-                const id = input.getAttribute("item-id");
+const ListInputPosition = document.querySelectorAll("[input-position]");
+if (ListInputPosition.length > 0) {
+    ListInputPosition.forEach((input) => {
+        input.addEventListener("change", () => {
+            const path = input.getAttribute("data-path");
+            const position = parseInt(input.value);
+            const id = input.getAttribute("item-id");
 
-                const data = {
-                    id: id,
-                    position: position
-                }
+            const data = {
+                id: id,
+                position: position
+            }
 
-                fetch(path,{
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    method: "PATCH",
-                    body: JSON.stringify(data)
-                })
+            fetch(path, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                method: "PATCH",
+                body: JSON.stringify(data)
+            })
                 .then(res => res.json())
                 .then(id => {
-                    if(id.code == "success"){
+                    if (id.code == "success") {
                         location.reload();
                     }
                 })
 
-            })
         })
-    }
+    })
+}
 // hết đổi vị trí
 
 // alert-message
-    const alertMessage = document.querySelector("[alert-message]");
-    if(alertMessage){
-        setTimeout(() => {
-            alertMessage.style.display = "none";
-        }, 3000);
-    }
+const alertMessage = document.querySelector("[alert-message]");
+if (alertMessage) {
+    setTimeout(() => {
+        alertMessage.style.display = "none";
+    }, 3000);
+}
 // hết alert-message
 
 // preview ảnh
 const uploadImage = document.querySelector("[upload-image]");
-if(uploadImage){
+if (uploadImage) {
     const uploadImageInput = document.querySelector("[upload-image-input]");
     const uploadImagePreview = document.querySelector("[upload-image-preview]");
     uploadImageInput.addEventListener("change", () => {
         const file = uploadImageInput.files[0];
-        if(file){
+        if (file) {
             uploadImagePreview.src = URL.createObjectURL(file);
         }
     })
@@ -238,27 +238,75 @@ if(uploadImage){
 //hết preview ảnh
 
 // sắp xếp
-    const sortSelect = document.querySelector("[sort-select]");
-    if(sortSelect){
-        let url = new URL(location.href);
-        sortSelect.addEventListener("change", () =>{
-            const value = sortSelect.value
-            if(value){
-                const [sortKey, sortValue] = value.split("-");
-                url.searchParams.set("sortKey", sortKey);
-                url.searchParams.set("sortValue", sortValue);
-            }else{
-                url.searchParams.delete("sortKey");
-                url.searchParams.delete("sortValue");
-            }
-            location.href = url.href;
-        });
-
-        // hiển thị mặc định
-        const sortKeyCurrent = url.searchParams.get("sortKey");
-        const sortValueCurrent = url.searchParams.get("sortValue");
-        if(sortKeyCurrent && sortValueCurrent){
-            sortSelect.value = `${sortKeyCurrent}-${sortValueCurrent}`;
+const sortSelect = document.querySelector("[sort-select]");
+if (sortSelect) {
+    let url = new URL(location.href);
+    sortSelect.addEventListener("change", () => {
+        const value = sortSelect.value
+        if (value) {
+            const [sortKey, sortValue] = value.split("-");
+            url.searchParams.set("sortKey", sortKey);
+            url.searchParams.set("sortValue", sortValue);
+        } else {
+            url.searchParams.delete("sortKey");
+            url.searchParams.delete("sortValue");
         }
+        location.href = url.href;
+    });
+
+    // hiển thị mặc định
+    const sortKeyCurrent = url.searchParams.get("sortKey");
+    const sortValueCurrent = url.searchParams.get("sortValue");
+    if (sortKeyCurrent && sortValueCurrent) {
+        sortSelect.value = `${sortKeyCurrent}-${sortValueCurrent}`;
     }
+}
 // hết sắp xếp
+
+// Phân quyền
+const tablePermissions = document.querySelector("[table-permissions]");
+if (tablePermissions) {
+    const buttonSubmit = document.querySelector("[button-submit]");
+    buttonSubmit.addEventListener("click", () => {
+        const dataFinal = [];
+        const listElementRoleId = document.querySelectorAll("[role-id]");
+        listElementRoleId.forEach(elementRoleId => {
+            const roleId = elementRoleId.getAttribute("role-id");
+            const permissions = [];
+            const listInputChecked = document.querySelectorAll(`input[data-id="${roleId}"]:checked`);
+            listInputChecked.forEach(input => {
+                const tr = input.closest(`tr[data-name]`);
+                const name = tr.getAttribute("data-name");
+                permissions.push(name);
+            })
+            dataFinal.push({
+                id: roleId,
+                permissions: permissions
+            });
+        })
+        const path = buttonSubmit.getAttribute("data-path");
+        fetch(path, {
+            headers: {
+                "Content-Type": "application/json",
+            },
+            method: "PATCH",
+            body: JSON.stringify(dataFinal)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.code == "success") {
+                    location.reload();
+                }
+            })
+    })
+    // Hiển thị mặc định
+    let dataPermissions = tablePermissions.getAttribute("table-permissions");
+    dataPermissions = JSON.parse(dataPermissions);
+    dataPermissions.forEach(item => {
+        item.permissions.forEach(permission => {
+            const input = document.querySelector(`tr[data-name="${permission}"] input[data-id="${item._id}"]`);
+            input.checked = true;
+        })
+    });
+}
+// Hết Phân quyền
