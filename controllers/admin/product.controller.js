@@ -1,4 +1,5 @@
 const Product = require("../../models/product.model");
+const ProductCategory = require("../../models/product-category.model");
 const systemComfig = require("../../config/system");
 module.exports.index = async (req, res) => {
     const find = {
@@ -152,8 +153,12 @@ module.exports.changePosition = async (req, res) => {
 
 // thêm mới sản phẩm
 module.exports.create = async (req, res) => {
+    const listCategory = await ProductCategory.find({
+        deleted: false
+    })
     res.render("admin/pages/products/create", {
         pageTitle: "Thêm mới sản phẩm",
+        listCategory: listCategory
         
     });
 }
@@ -168,7 +173,8 @@ module.exports.createPost = async (req, res) => {
         const countRecord = await Product.countDocuments()
         req.body.position = countRecord + 1;
     }
-
+    // console.log(req.body)
+    // res.send("ok")
     const record = new Product(req.body);
     await record.save();
     res.redirect(`/${systemComfig.prefixAdmin}/products`);

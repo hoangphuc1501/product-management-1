@@ -8,6 +8,7 @@ const productSchema = new mongoose.Schema({
         slug: "title",
         unique: true
     },
+    category_id: String,
     description: String,
     price: Number,
     discountPercentage: Number,
