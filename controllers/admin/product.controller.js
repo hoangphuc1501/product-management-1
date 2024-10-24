@@ -173,8 +173,6 @@ module.exports.createPost = async (req, res) => {
         const countRecord = await Product.countDocuments()
         req.body.position = countRecord + 1;
     }
-    // console.log(req.body)
-    // res.send("ok")
     const record = new Product(req.body);
     await record.save();
     res.redirect(`/${systemComfig.prefixAdmin}/products`);
@@ -183,14 +181,19 @@ module.exports.createPost = async (req, res) => {
 
 module.exports.edit = async (req, res) => {
     const id = req.params.id;
-
+    
     const product = await Product.findOne({
         _id: id,
         deleted: false
     })
+    
+    const listCategory = await ProductCategory.find({
+        deleted: false
+    })
     res.render("admin/pages/products/edit", {
         pageTitle: "Chỉnh sửa sản phẩm",
-        product: product
+        product: product,
+        listCategory: listCategory
         
     });
 }
