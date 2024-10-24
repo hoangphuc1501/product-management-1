@@ -32,3 +32,42 @@ module.exports.createPost = async (req, res)=>{
     res.redirect(`/${systemComfig.prefixAdmin}/products-category`);
 
 }
+
+module.exports.edit = async (req, res)=>{
+    const id = req.params.id;
+
+    const listCategory = await ProductCategory.find({
+        deleted: false
+    })
+
+    const category = await ProductCategory.findOne({
+        _id: id,
+        deleted: false
+    })
+
+    console.log(category)
+    res.render("admin/pages/products-category/edit", {
+        pageTitle: "Chỉnh danh mục sản phẩm",
+        listCategory: listCategory,
+        category: category
+    });
+}
+
+module.exports.editPatch = async (req, res)=>{
+    const id = req.params.id
+
+    if(req.body.position){
+        req.body.position = parseInt(req.body.position);
+    }else{
+        delete req.body.position
+    }
+    await ProductCategory.updateOne({
+        _id: id,
+        deleted:false
+    }, req.body)
+
+    req.flash("success", "Cập nhật thành công!")
+    res.redirect("back");
+
+
+}
